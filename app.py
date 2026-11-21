@@ -1,9 +1,13 @@
+import os
+from pathlib import Path
+
 import pandas as pd
 from flask import Flask, render_template, request
 from sklearn.tree import DecisionTreeClassifier
 
 app = Flask(__name__)
-data = pd.read_csv("traffic_data.csv")
+data_path = Path(__file__).resolve().parent / "traffic_data.csv"
+data = pd.read_csv(data_path)
 features = ["hour", "day"]
 X = pd.get_dummies(data[features])
 y = data["traffic_level"]
@@ -26,4 +30,8 @@ def home():
     return render_template("index.html", prediction=prediction, shown_time=shown_time)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", 10000)),
+        debug=False,
+    )
