@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Traffic Level Predictor</title>
+  <style>
+    body { max-width: 500px; margin: 48px auto; padding: 0 18px; font: 16px Arial, sans-serif; color: #263747; }
+    label { display: block; margin: 18px 0; }
+    select, input { display: block; width: 100%; box-sizing: border-box; padding: 10px; margin-top: 6px; }
+    button { padding: 11px 16px; background: #245b78; color: white; border: 0; border-radius: 5px; font-size: 16px; }
+    .result { margin-top: 22px; font-size: 21px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Traffic Level Predictor</h1>
+  <p>Choose a day and time to predict the traffic level.</p>
+  <form method="post">
+    <label>Day of the week
+      <select name="day" required>
+        {% for day in ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"] %}
+        <option value="{{ day }}">{{ day }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>Time (AM or PM)
+      <input type="time" name="time" value="08:00" required>
+    </label>
+    <button type="submit">Predict traffic</button>
+  </form>
+  {% if prediction %}<p class="result">{{ shown_time }} is {{ prediction }} traffic</p>{% endif %}
+</body>
+</html>
